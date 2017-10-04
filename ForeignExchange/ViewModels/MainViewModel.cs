@@ -2,12 +2,24 @@
 {
 	using System;
 	using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Windows.Input;
     using ForeignExchange.Models;
     using GalaSoft.MvvmLight.Command;
 
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Atributes
+        bool _isRunning;
+        string _result;
+        #endregion
+
+
+
         #region Properties
         public string Amount
         {
@@ -35,8 +47,20 @@
 
         public bool IsRunning
 		{
-			get;
-			set;
+			get
+			{
+				return _isRunning;
+			}
+			set
+			{
+				if (_isRunning != value)
+				{
+					_isRunning = value;
+                    PropertyChanged?.Invoke(
+                        this,
+                        new PropertyChangedEventArgs(nameof(IsRunning)));
+				}
+			}
 		}
 
 		public bool IsEnabled
@@ -47,8 +71,20 @@
 
 		public string Result
 		{
-			get;
-			set;
+			get
+			{
+                return _result;
+			}
+			set
+			{
+				if (_result != value)
+				{
+					_result = value;
+					PropertyChanged?.Invoke(
+						this,
+						new PropertyChangedEventArgs(nameof(IsRunning)));
+				}
+			}
 		}
 
 
@@ -56,9 +92,27 @@
 
 
 
+        #region Constructors
         public MainViewModel()
-        { 
+        {
+            LoadRates();
         }
+
+        #endregion
+
+
+        #region Methods
+        void LoadRates()
+        {
+            IsRunning = true;
+            Result = "Loading Rates...!";
+        }
+
+        #endregion
+
+
+
+
 
         #region Command
 

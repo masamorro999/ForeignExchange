@@ -5,9 +5,15 @@
     x:Class="ForeignExchange.Views.MainView"
     BackgroundColor="Teal"
     BindingContext="{Binding Main, Source={StaticResource Locator}}">
-	<ContentPage.Content>
-        <StackLayout
-            Padding="20,30,20,10">
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness"
+            iOS="20,30,20,10"
+            Android="10"/>
+    </ContentPage.Padding>
+
+    <ContentPage.Content>
+        <StackLayout>
             <Label
                 FontAttributes="Bold"
                 FontSize="Large"
